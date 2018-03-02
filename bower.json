@@ -1,0 +1,28 @@
+{
+  "name": "build-package-distribute",
+  "version": "1.0.0",
+  "authors": [
+    "Daniel Maslowski <info@orangecms.org>"
+  ],
+  "description": "presentation slides on building, packaging and distributing software",
+  "main": "index.html",
+  "moduleType": [],
+  "keywords": [
+    "build",
+    "package",
+    "distribute",
+    "ebuild",
+    "makepkg",
+    "ports"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "bower_components"
+  ],
+  "dependencies": {
+    "remark": "^0.13.0"
+  }
+}

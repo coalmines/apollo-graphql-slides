@@ -1,0 +1,26 @@
+{
+  "name": "build-package-distribute",
+  "version": "1.0.0",
+  "description": "presentation slides on building, packaging and distributing software",
+  "main": "src/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gulp"
+  },
+  "keywords": [
+    "build",
+    "package",
+    "distribute",
+    "ebuild",
+    "makepkg",
+    "ports"
+  ],
+  "author": "Daniel Maslowski",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-connect": "^2.3.1",
+    "gulp-watch": "^4.3.11"
+  }
+}
