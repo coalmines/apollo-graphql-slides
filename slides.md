@@ -26,6 +26,85 @@ class: center, middle
 
 ---
 
+### GraphQL
+
+![GrapbQL](img/graphql.png)
+
+--
+
+* a query language for APIs
+* views queries as graphs 🤷
+* provides predictable results
+* has a built-in type system
+* [spec](http://facebook.github.io/graphql/October2016/) is a working draft
+
+---
+
+### Example Query
+
+--
+
+```graphql
+query {
+  coalMines {
+    name
+    location {
+      address
+      zipCode
+      city
+    }
+  }
+}
+```
+
+--
+
+* fields: a coal mine may have a lot of data, e.g.:
+  - name
+  - location
+  - website
+  - shutdown date
+* relation: every location can hold a reference to a geo API like OSM
+
+---
+
+### Example Response
+
+```json
+{
+  "data": {
+    "coalMines": [
+      {
+        "name": "Zeche Carl",
+        "location": {
+          "address": "Wilhelm-Nieswandt-Allee 100",
+          "zipCode": "45326",
+          "city": "Essen"
+        }
+      },
+      {
+        "name": "Zeche Helene",
+        "location": {
+          "address": "Twentmannstraße 125",
+          "zipCode": "45326",
+          "city": "Essen"
+        }
+      },
+      {
+        "name": "Zeche Zollverein",
+        "location": {
+          "address": "Gelsenkirchener Str. 181",
+          "zipCode": "45309",
+          "city": "Essen"
+        }
+      }
+    ]
+  }
+}
+```
+
+---
+
 class: center, middle
 
 ## RPC Architectures
