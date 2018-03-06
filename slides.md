@@ -1,6 +1,6 @@
 class: center, middle
 
-# A JavaScript GraphQL Stack Built With
+# A JavaScript GraphQL Stack Built With Apollo
 
 [![Apollo GraphQL](img/apollo.png)](https://apollographql.com)
 
