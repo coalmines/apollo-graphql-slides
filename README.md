@@ -11,7 +11,7 @@ presented through [Remark.js](https://remarkjs.com/).
 ### Abstract
 This talk provides a quick introduction to the [GraphQL](http://graphql.org/)
 language itself, the pub-sub and request-response RPC architectures behind it,
-as well as schema exploration and visual documentation through Graphiql.
+as well as schema exploration and visual documentation through GraphiQL.
 
 While enumerating some use cases, the slides suggest a possible integration with
 existing services and showcase a set of tooling all based on JavaScript,

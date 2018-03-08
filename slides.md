@@ -14,7 +14,7 @@ Daniel Maslowski |
 
 1. Introduction to GraphQL
 2. RPC Architectures
-3. Graphiql Frontend
+3. GraphiQL Frontend
 4. Tooling and Testing
 5. Logging and Monitoring
 
@@ -224,11 +224,11 @@ function handleRequest(ctx, next) {
 
 class: center, middle
 
-## Graphiql Frontend
+## GraphiQL Frontend
 
 ---
 
-### Graphiql
+### GraphiQL
 
 --
 
