@@ -18,6 +18,10 @@ existing services and showcase a set of tooling all based on JavaScript,
 featuring static analysis through linting, both unit and integration tests, as
 well as a proposal for logging and performance monitoring.
 
+### Related Talks
+* [Eric Baer - The Evolution of API Design: From RPC to GraphQL](https://www.youtube.com/watch?v=PmWho45WmQY)
+* [Guillaume Diallo-Mulliez - My React (Native) app speaks GraphQL](http://slides.com/guitoof/my-react-app-speaks-graphql-with-apollo-client/fullscreen#/)
+
 ## Installation
 You will need Bower, and for development with live reload, also Node.js, npm
 and Gulp.
