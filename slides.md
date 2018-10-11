@@ -464,6 +464,15 @@ export default (name) => {
 
 ---
 
+### Health Check
+
+* important for Site Reliability Engineers to determine basic status
+* tyipically displayed by SaaS providers at `status.example.com`
+* [ITEF draft](https://tools.ietf.org/id/draft-inadarei-api-health-check-01.html)
+* built into Apollo Server 2 on `/.well-known/apollo/server-health`
+
+---
+
 ### Monitoring With [Apollo Engine](https://www.apollographql.com/engine)
 
 
