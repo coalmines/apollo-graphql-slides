@@ -166,7 +166,7 @@ class: center, middle
 --
 
 
-* requires session middleware
+* requires session and/or token middleware or similar
 
 --
 
@@ -177,20 +177,25 @@ class: center, middle
 
 
 * existing library: [Passport](http://www.passportjs.org/docs/)
+  - [session middleware](https://mherman.org/blog/user-authentication-with-passport-and-koa/)
+  - [JWT middleware](https://dev.to/hasusozam/passport-jwt-with-graphql-3gdj)
 
 --
 
-#### Integration example
+#### Integration example with Koa and Passport session
 ```javascript
-function handleRequest(ctx, next) {
-  const { user } = ctx.session;
-  const context = { user };
-  return graphqlKoa({
-    schema,
-    context,
-  })(ctx, next);
+function passContext({ ctx }) {
+  if (ctx.session.passport) {
+    const { user } = ctx.session.passport;
+    return { user };
+  }
+  return {};
 }
 
+const server = new ApolloServer({
+  schema,
+  context: passContext,
+});
 ```
 
 ---
