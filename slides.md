@@ -210,7 +210,7 @@ const server = new ApolloServer({
 
 --
 
-#### [Subscription Proposal](https://github.com/facebook/graphql/blob/master/rfcs/Subscriptions.md)
+#### [In Proposal](https://github.com/facebook/graphql/blob/master/rfcs/)
 
 * Publish-Subscribe
   - `Subscription` (client registers for receiving data continuously)
