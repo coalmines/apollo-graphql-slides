@@ -14,9 +14,10 @@ Daniel Maslowski |
 
 1. Introduction to GraphQL
 2. RPC Architectures
-3. GraphiQL Frontend
-4. Tooling and Testing
-5. Logging and Monitoring
+3. GraphQL Clients
+4. GraphQL Schemas
+5. Testing
+6. Logging and Monitoring
 
 ---
 
@@ -224,7 +225,7 @@ function handleRequest(ctx, next) {
 
 class: center, middle
 
-## GraphiQL Frontend
+## GraphQL Clients
 
 ---
 
@@ -234,46 +235,121 @@ class: center, middle
 
 
 * query editor with auto-completion and syntax highlighting
-* schema exploration via introspection queries
-
-
---
-
-* can be used as a React component
-* can be served as a full app with a one-liner
+* automatic schema exploration via introspection queries
+* can be used as a React component and served through middleware
 
 --
 
 ```javascript
-router.get('/graphiql', graphiqlKoa({ endpointURL: '/graphql' }));
+router.get('/graphiql', graphiqlMiddleware({ endpointURL: '/graphql' }));
 ```
 
 --
 
 ![GraphiQL screenshot](img/graphiql.png)
 
+---
+
+### GraphQL Playground
+
 --
 
-#### Demo Time! :)
+
+* similar to GraphiQL, but with more features
+* included in [Apollo Server 2](https://www.apollographql.com/docs/apollo-server/whats-new.html#GraphQL-Playground)
+* currently not sending cookies by default because of a
+[bug](https://github.com/prisma/graphql-playground/issues/748#issuecomment-412524510)
+
+--
+
+![GraphQL Playground screenshot](img/graphql-playground.png)
+
+---
+
+### Insomnia
+
+* portable desktop REST client built with Electron
+* supports GraphQL queries and introspection
+
+![Insomnia screenshot](img/insomnia.png)
 
 ---
 
 class: center, middle
 
-## Tooling and Testing
+## [GraphQL Schemas](https://www.apollographql.com/docs/apollo-server/essentials/schema.html)
 
 ---
 
-### GraphQL Schemas
+### Type Definitions
 
-* type definitions
+
+--
+
+* Schema Definition Language
   - graphql-tag (allows syntax highlighting)
-  - precompiled (best performance)
-  - export strings (with the two above, documentation directives get lost)
-  - programmatic (hand-crafted, yay)
-* resolvers
+  - precompiled (`*.graphql`, best performance)
+  - export strings (documentation is a prepended hash `# foo`)
+
+
+--
+
+* [programmatic](https://www.apollographql.com/docs/apollo-server/migration-two-dot.html#schema-object-notation) (hand-crafted, yay)
+
+
+--
+
+
+* `Query`, `Mutation`, `Subscription`
+
+--
+
+* scalars
+  - basic types for type definitions
+  - primitives like `String` are predefined
+  - [custom scalars](https://www.apollographql.com/docs/apollo-server/features/scalars-enums.html) can be defined and added, such as `Date`
+  - Apollo Server 2 [includes an `Upload` scalar](https://www.apollographql.com/docs/apollo-server/whats-new.html#File-Uploads)
+
+
+--
+
+
+* `scalar`, `type`, `interface`, `union`, `enum`, `input`
+
+--
+
+
+* [documentation](https://facebook.github.io/graphql/draft/#sec-Documentation) for introspection
+
+---
+
+### Resolvers
+
   - requests to other services
   - transformations
+  - directives
+    * [predefined directives](https://www.apollographql.com/docs/apollo-server/features/directives.html) exist, e.g., `@deprecated`
+    * [custom directives](https://www.apollographql.com/docs/apollo-server/features/directives.html#Using-custom-schema-directives) can be defined
+    * useful for common functionality such as general access controls
+
+---
+
+### Composition
+
+* [Introspection queries](https://graphqlmastery.com/blog/graphql-introspection-and-introspection-queries)
+  - disabled in Apollo Server 2 by default, enable through `introspection` flag
+* type definitions and resolvers can be merged, respectively
+* schemas can be
+  - [delegated](https://www.apollographql.com/docs/graphql-tools/schema-delegation.html)
+  - namespaced ([transformed](https://www.apollographql.com/docs/apollo-server/api/graphql-tools.html#Transform))
+  - merged ([stitched](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html))
+  - [extended](https://www.apollographql.com/docs/graphql-tools/generate-schema.html#extend-types)
+
+---
+
+class: center, middle
+
+## Testing
 
 ---
 
@@ -282,15 +358,19 @@ class: center, middle
 * suitable for transformations
 * run fast, offline, without extra dependencies
 * provide fixtures for responses from other services
+* test can be run in parallel
+* simple assertion library like Mocha or the default `assert` module suffices
 
 ---
 
 ### Integration & Service Testing
 
 * run an instance of the GraphQL API service
-* stub out external dependencies (used by resolvers)
+* [stub out external dependencies](https://www.apollographql.com/docs/apollo-server/whats-new.html#Schema-mocking) (used by resolvers)
 * provide fixtures for responses to the requests to other services
 * assert that a query receives a response or an error as intended
+* use Apollo Client to make the requests
+* stub for authentication
 
 ---
 
@@ -318,13 +398,9 @@ class: center, middle
 --
 
 
-* web server
-
---
-
-
-* resolvers
-* subscriptions
+* web server setup
+* authentication
+* resolvers (authorization and other services)
 
 --
 
@@ -337,18 +413,27 @@ class: center, middle
 
 ---
 
+### [Predefined in Apollo Server 2](https://www.apollographql.com/docs/apollo-server/whats-new.html#GraphQL-errors)
+
+* ApolloError
+* ForbiddenError
+* AuthenticationError
+
+---
+
 class: center, middle
 
 ## Logging and Monitoring
 
 ---
 
-### Logging
+### [Logging](https://www.apollographql.com/docs/apollo-server/features/metrics.html#Logging)
 
 * log incoming requests for auditability: who is doing what?
   - do *not* log sensitive information
-* `makeExecutableSchema` takes a `logger` as an optional argument
+* [`makeExecutableSchema`](https://www.apollographql.com/docs/apollo-server/api/graphql-tools.html#makeExecutableSchema) takes a `logger` as an optional argument
   - logger has to implement a function `log`
+* experimental extensions API in Apollo Server 2
 
 --
 
@@ -376,17 +461,40 @@ export default (name) => {
 
 ### Monitoring With [Apollo Engine](https://www.apollographql.com/engine)
 
+
+--
+
 * UI with dashboard is a [hosted service](http://engine.apollographql.com/)
+
+
+--
+
 * [Engine Proxy](https://www.apollographql.com/docs/engine/#engine-proxy) comes as a binary written in Go
+
+
+--
+
 * can be run as
-  - middleware that spawns a child process
+  - middleware that spawns a child process, [included in Apollo Server 2](https://www.apollographql.com/docs/apollo-server/whats-new.html#Performance-monitoring)
   - a container in a service landscape
+
+
+--
+
 * performance tracing and error tracking
   - requires tracing extension from GrahQL API
   - recommends compression middleware
   - extensions can be filtered out for the client with `formatResponse`
-* response caching and persisted queries
+
+
+--
+
 * schema usage analysis
+
+
+--
+
+* response caching and persisted queries
 
 ---
 
